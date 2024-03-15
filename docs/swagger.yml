@@ -1,0 +1,144 @@
+swagger: '2.0'
+info:
+  title: Authentication API
+  description: API for user authentication
+  version: '1.0'
+basePath: '/'
+tags:
+  - name: Authentication
+    description: User authentication operations
+paths:
+  /signUp:
+    post:
+      tags:
+        - Authentication
+      summary: Register new user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User credentials
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: Flask1
+              password:
+                type: string
+                example: testPassword1234
+      responses:
+        '201':
+          description: Created - Successful creation
+          schema:
+            type: object
+            properties:
+              sucess:
+                type: boolean
+                example: true
+        '400':
+          description: Bad request - Validation errors
+          schema:
+            $ref: '#/definitions/ValidationError'
+        '409':
+          description: Conflict - Validation errors
+          schema:
+            $ref: '#/definitions/SignUpValidationError'
+        '500':
+          description: Internal Server Error - Exception errors
+          schema:
+            $ref: '#/definitions/ExceptionError'
+  /signIn:
+    post:
+      tags:
+        - Authentication
+      summary: Sign in user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User credentials
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: Flask1
+              password:
+                type: string
+                example: testPassword1234
+      responses:
+        '200':
+          description: OK - Successful Login
+          schema:
+            type: object
+            properties:
+              sucess:
+                type: boolean
+                example: true
+        '401':
+          description: Unauthorized - Invalid password
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+        '404':
+          description: Not found - User not found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+
+definitions:
+  ValidationError:
+    type: object
+    properties:
+      success:
+        type: boolean
+        example: False
+      reason:
+        type: string
+        example:
+          - 'Username length must be between 3 and 32 characters'
+          - 'Password length must be between 8 and 32 characters'
+          - 'Password must contain at least one uppercase letter'
+          - 'Password must contain at least one lowercase letter'
+          - 'Password must contain at least one number'
+  SignUpValidationError:
+    type: object
+    properties:
+      success:
+        type: boolean
+        example: False
+      reason:
+        type: string
+        example: 'Username already exists'
+  ExceptionError:
+    type: object
+    properties:
+      success:
+        type: boolean
+        example: False
+      reason:
+        type: string
+        example: 'An error occurred'
+  UnauthorizedError:
+    type: object
+    properties:
+      success:
+        type: boolean
+      reason:
+        type: string
+        example: 'Invalid password'
+  NotFoundError:
+    type: object
+    properties:
+      success:
+        type: boolean
+      reason:
+        type: string
+        example: 'User not found'
