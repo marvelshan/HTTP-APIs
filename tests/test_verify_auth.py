@@ -11,54 +11,57 @@ def client():
         yield client
 
 
-def test_signUp_request_valid_data(client):
-    """Tests the /signUp endpoint with valid user data."""
+def test_signIp_request_valid_data(client):
+    """Tests the /signIn endpoint with valid user data."""
     response = client.post(
-        "/api/signUp",
-        data=dumps(
-            {
-                "username": "Flask34",
-                "password": "testPassword1234",
-            }
-        ),
-        content_type="application/json",
-    )
-    assert response.status_code == 201
-    assert response.json["success"] is True
-
-
-def test_signUp_request_username_exists(client):
-    """Tests the /signUp endpoint with valid user data."""
-    response = client.post(
-        "/api/signUp",
-        data=dumps(
-            {
-                "username": "Flask20",
-                "password": "testPassword1234",
-            }
-        ),
-        content_type="application/json",
-    )
-    assert response.status_code == 400
-    assert response.json["success"] is False
-    assert response.json["reason"] == "Username already exists"
-
-
-def test_signUp_request_valueError_lack_uppercase(client):
-    """Tests the /signUp endpoint with valid user data."""
-    response = client.post(
-        "/api/signUp",
+        "/api/signIn",
         data=dumps(
             {
                 "username": "Flask1",
-                "password": "testpassword1234",
+                "password": "testPassword1234",
             }
         ),
         content_type="application/json",
     )
-    assert response.status_code == 400
+    assert response.status_code == 200
+    assert response.json["success"] is True
+
+
+def test_signIn_request_valueError_invalid_password(client):
+    """Tests the /signUp endpoint with invalid password."""
+    response = client.post(
+        "/api/signIn",
+        data=dumps(
+            {
+                "username": "Flask1",
+                "password": "testpassword",
+            }
+        ),
+        content_type="application/json",
+    )
+    assert response.status_code == 401
     assert response.json["success"] is False
     assert (
         response.json["reason"]
-        == "Value error, Password must contain at least one uppercase letter"
+        == "Invalid password"
+    )
+
+
+def test_signIn_request_valueError_user_not_found(client):
+    """Tests the /signIn endpoint with user not found."""
+    response = client.post(
+        "/api/signIn",
+        data=dumps(
+            {
+                "username": "Django",
+                "password": "testpassword",
+            }
+        ),
+        content_type="application/json",
+    )
+    assert response.status_code == 404
+    assert response.json["success"] is False
+    assert (
+        response.json["reason"]
+        == "User not found"
     )
