@@ -1,8 +1,8 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, jsonify
 from blueprints.authentication import authentication_bp
 from models.database import db
-from dotenv import load_dotenv
-import os
 
 load_dotenv()
 
@@ -15,12 +15,15 @@ db.init_app(app)
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return jsonify({"message": "This page does not exist", "error": str(error)}), 404
+    error_message = {
+        "message": "This page does not exist", "error": str(error)}
+    return jsonify(error_message), 404
 
 
 @app.errorhandler(Exception)
 def handle_exception(error):
-    return jsonify({"message": "An error occurred", "error": str(error)}), 500
+    error_message = {"message": "An error occurred", "error": str(error)}
+    return jsonify(error_message), 500
 
 
 app.register_blueprint(authentication_bp, url_prefix="/api")

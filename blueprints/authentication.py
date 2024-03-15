@@ -1,18 +1,18 @@
+import os
+import bcrypt
 from flask import Blueprint, request, jsonify
-from models.models import db, User, SignUpInput
 from sqlalchemy.exc import IntegrityError
 from pydantic import ValidationError
-import bcrypt
-import os
+from models.models import db, User, Sign_up_input, Sign_in_input
 
 
 authentication_bp = Blueprint("authentication_bp", __name__)
 
 
 @authentication_bp.route("/signUp", methods=["POST"])
-def signUp():
+def sign_up():
     try:
-        SignUpInput(**request.json)
+        Sign_up_input(**request.json)
         data = request.json
         username = data.get("username")
         password = data.get("password")
@@ -32,8 +32,31 @@ def signUp():
         for error in e.errors():
             error_messages.append(error["msg"])
         return jsonify(success=False, reason=error_messages), 400
-    except IntegrityError as e:
+    except IntegrityError:
         db.session.rollback()
-        return jsonify({"success": False, "reason": "Username already exists"}), 400
-    except Exception as e:
-        return jsonify({"success": False, "reason": e}), 500
+        error_message = {"success": False, "reason": "Username already exists"}
+        return jsonify(error_message), 400
+
+
+@authentication_bp.route("/signIn", methods=["POST"])
+def sign_in():
+    try:
+        Sign_in_input(**request.json)
+        data = request.json
+        username = data.get("username")
+        password = data.get("password")
+
+        user = User.query.filter_by(username=username).first()
+        if user:
+            if bcrypt.checkpw(
+                password.encode("utf-8"), user.password_hash.encode("utf-8")
+            ):
+                return jsonify(success=True), 200
+            else:
+                return jsonify(success=False, reason="Invalid password"), 401
+        else:
+            return jsonify(success=False, reason="User not found"), 404
+
+    except ValidationError as e:
+        error_messages = [error["msg"] for error in e.errors()]
+        return jsonify(success=False, reason=error_messages), 400
