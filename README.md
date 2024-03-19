@@ -38,19 +38,33 @@ This repository contains a solution for managing user accounts and passwords thr
 
 ## User guide
 
+1. Clone the Repository:
+
 ```bash
 git clone https://github.com/marvelshan/HTTP-APIs.git
 ```
+
+_This command clones the GitHub repository containing the HTTP APIs project to your local machine._
+
+2. Navigate to the Project Directory:
 
 ```bash
 cd HTTP-APIs/
 ```
 
+3. Start the Docker Compose Environment:
+
 ```bash
 docker compose up -d
 ```
 
-**And waiting about 10 seconds.**
+_This command uses Docker Compose to build and start the containers defined in the docker-compose.yml file. The -d flag runs containers in detached mode, meaning they will run in the background._
+
+4. Wait for 10 Seconds:
+
+_Allow some time for the containers to initialize and the Flask server to start running. Ten seconds should be sufficient for the server to be ready to accept requests._
+
+5. Send a POST Request to Sign Up:
 
 ```bash
 curl -X POST \
@@ -65,6 +79,10 @@ curl -X POST \
 expected:
 **{"success":true}**
 
+_This curl command sends a POST request to the /api/signUp endpoint of the Flask server running locally. It includes JSON data with a username and password to sign up a new user. The -H flag sets the Content-Type header to application/json._
+
+6. Send a POST Request to Sign In:
+
 ```bash
 curl -X POST \
   -H "Content-Type: application/json" \
@@ -77,6 +95,14 @@ curl -X POST \
 
 expected:
 **{"success":true}**
+
+_This curl command sends a POST request to the /api/signIn endpoint of the Flask server, attempting to sign in with the same username and password provided during sign-up._
+
+7. Close docker container
+
+```bash
+docker compose down
+```
 
 ## Coding Schedule
 
