@@ -38,6 +38,46 @@ This repository contains a solution for managing user accounts and passwords thr
 
 ## User guide
 
+```bash
+git clone https://github.com/marvelshan/HTTP-APIs.git
+```
+
+```bash
+cd HTTP-APIs/
+```
+
+```bash
+docker compose up -d
+```
+
+**And waiting about 10 seconds.**
+
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+        "username": "Flask14",
+        "password": "testPassword1234"
+      }' \
+  http://localhost:5000/api/signUp
+```
+
+expected:
+**{"success":true}**
+
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+        "username": "Flask14",
+        "password": "testPassword1234"
+      }' \
+  http://localhost:5000/api/signIn
+```
+
+expected:
+**{"success":true}**
+
 ## Coding Schedule
 
 **3/14** Proof of Concept (POC) Python framework, and found some projects on the Internet and GitHub. Developed a sign-up API, wrote tests to cover it, and added error handling.
@@ -97,7 +137,7 @@ class Sign_up_input (BaseModel):
 
 ### SQLAlchemy
 
-**CRUD:**
+**CRUD:** (example on the Internet)
 
 ```python
 #Create
@@ -133,7 +173,6 @@ def delete_test(db: Session, test_id: int) -> int:
 ```
 
 Source by:
-
 [Postgresql + Sqlalchemy ORM CRUD 方式 - HackMD](https://hackmd.io/@UTRxSLfpRa6ds1oeI2U7Lw/s9891326)
 
 ### WSGI, Gunicorn:
@@ -173,11 +212,12 @@ gunicorn -b 0.0.0.0:5000 app:app
 
 ### Virtual environment:
 
+The `venv` module supports creating lightweight “virtual environments”, each with their own independent set of Python packages installed in their [site](https://docs.python.org/3/library/site.html#module-site) directories. A virtual environment is created on top of an existing Python installation, known as the virtual environment’s “base” Python, and may optionally be isolated from the packages in the base environment, so only those explicitly installed in the virtual environment are available.
+
+Source by:
 [venv — Creation of virtual environments](https://docs.python.org/3/library/venv.html)
 
-> The `venv` module supports creating lightweight “virtual environments”, each with their own independent set of Python packages installed in their `[site](https://docs.python.org/3/library/site.html#module-site)` directories. A virtual environment is created on top of an existing Python installation, known as the virtual environment’s “base” Python, and may optionally be isolated from the packages in the base environment, so only those explicitly installed in the virtual environment are available.
-
-### PEP8 Coding Style
+### PEP8 Coding Style:
 
 As Guido van Rossum said, “Code is read much more often than it’s written.” You may spend a few minutes, or a whole day, writing a piece of code to process user authentication. Once you’ve written it, you’re never going to write it again.
 
@@ -192,4 +232,4 @@ Source by:
 
 ---
 
-The completion year for the above: 2024
+_The completion year for the above: 2024_
