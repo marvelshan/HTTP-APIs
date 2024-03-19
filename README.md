@@ -138,7 +138,7 @@ Source by:
 
 ### WSGI, Gunicorn:
 
-![WSGI](https://github.com/marvelshan/HTTP-APIs/assets/WSGI)
+![WSGI](https://github.com/marvelshan/HTTP-APIs/blob/develop/assets/WSGI.png)
 
 Asking ChatGPT:
 
