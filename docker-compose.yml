@@ -1,25 +1,21 @@
-# Use root/example as user/password credentials
-version: '3.1'
+version: '3'
 
 services:
-  db:
-    image: mysql
+  senao_project_mysql:
+    image: zakilu/senao_project:mysql_latest
     ports:
       - "3307:3306"
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      
-  flask_app:
-    build: .
+    restart: always
+
+  senao_project_app:
+    image: zakilu/senao_project:senao_latest
     ports:
       - "5000:5000"
     depends_on:
-      - db
-    environment:
-      FLASK_ENV: development
-    volumes:
-      - .:/app
+      - senao_project_mysql
+    command: ["./wait-for-it.sh", "senao_project_mysql:3306", "--", "python", "app.py"]
+    restart: always
+
 
