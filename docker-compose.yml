@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  senao_project_db:
+    image: zakilu/senao_project:latest
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234"
+
+  senao_project_app:
+    image: zakilu/senao_project:senao_latest
+    ports:
+      - "5000:5000"
+    depends_on:
+      - senao_project_db
+    restart: always
+    environment:
+      DATABASE_URI: "mysql://root:1234@senao_project_db:3306/profile"
+
