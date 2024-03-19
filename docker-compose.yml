@@ -1,21 +1,20 @@
 version: '3'
 
 services:
-  senao_project_mysql:
-    image: zakilu/senao_project:mysql_latest
+  senao_project_db:
+    build: .
     ports:
       - "3307:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
-    restart: always
+      MYSQL_ROOT_PASSWORD: "1234"
 
   senao_project_app:
-    image: zakilu/senao_project:latest
+    image: zakilu/senao_project:senao_latest
     ports:
       - "5000:5000"
     depends_on:
-      - senao_project_mysql
-    command: ["./wait-for-it.sh", "senao_project_mysql:3306", "--", "python", "app.py"]
+      - senao_project_db
     restart: always
-
+    environment:
+      DATABASE_URI: "mysql://root:1234@senao_project_db:3306/profile"
 
