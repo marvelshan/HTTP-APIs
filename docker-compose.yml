@@ -10,7 +10,7 @@ services:
     restart: always
 
   senao_project_app:
-    image: zakilu/senao_project:senao_latest
+    image: zakilu/senao_project:latest
     ports:
       - "5000:5000"
     depends_on:
