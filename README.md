@@ -7,7 +7,7 @@ This repository contains a solution for managing user accounts and passwords thr
 ### **API 1: Create Account**
 
 - **Method**: POST
-- **Endpoint**: **`/create-account`**
+- **Endpoint**: **`/signUp`**
 - **Inputs**:
   - **`username`**: string (3-32 characters)
   - **`password`**: string (8-32 characters, with at least 1 uppercase letter, 1 lowercase letter, and 1 number)
@@ -18,7 +18,7 @@ This repository contains a solution for managing user accounts and passwords thr
 ### **API 2: Verify Account and Password**
 
 - **Method**: POST
-- **Endpoint**: **`/verify-account`**
+- **Endpoint**: **`/signIn`**
 - **Inputs**:
   - **`username`**: string
   - **`password`**: string
