@@ -38,7 +38,7 @@ This repository contains a solution for managing user accounts and passwords thr
 
 ## User guide
 
-1. docker-compose.yml
+**1. docker-compose.yml**
 
 ```
 version: '3'
@@ -62,7 +62,7 @@ services:
       DATABASE_URI: "mysql://root:1234@senao_project_db:3306/profile"
 ```
 
-2. Start the Docker Compose Environment:
+**2. Start the Docker Compose** Environment:
 
 ```bash
 docker compose up -d
@@ -70,11 +70,11 @@ docker compose up -d
 
 _This command uses Docker Compose to build and start the containers defined in the docker-compose.yml file. The -d flag runs containers in detached mode, meaning they will run in the background._
 
-3. Wait for 10 Seconds:
+**3. Wait for 10 Seconds:**
 
 _Allow some time for the containers to initialize and the Flask server to start running. Ten seconds should be sufficient for the server to be ready to accept requests._
 
-4. Send a POST Request to Sign Up:
+**4. Send a POST Request to Sign Up:**
 
 ```bash
 curl -X POST \
@@ -91,7 +91,7 @@ expected:
 
 _This curl command sends a POST request to the /api/signUp endpoint of the Flask server running locally. It includes JSON data with a username and password to sign up a new user. The -H flag sets the Content-Type header to application/json._
 
-5. Send a POST Request to Sign In:
+**5. Send a POST Request to Sign In:**
 
 ```bash
 curl -X POST \
@@ -108,7 +108,7 @@ expected:
 
 _This curl command sends a POST request to the /api/signIn endpoint of the Flask server, attempting to sign in with the same username and password provided during sign-up._
 
-6. Close docker container
+**6. Close docker container**
 
 ```bash
 docker compose down
