@@ -1,4 +1,5 @@
 # HTTP APIs for Account and Password Management
+![1200px-Flask_logo svg](https://github.com/marvelshan/HTTP-APIs/assets/140870617/54136f84-4e43-4afe-b4ac-792378cf69dc)
 
 This repository contains a solution for managing user accounts and passwords through two RESTful HTTP APIs, implemented in Python. The solution includes a Docker containerized application that hosts the APIs, with data storage and appropriate error handling.
 
