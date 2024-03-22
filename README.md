@@ -41,7 +41,7 @@ This repository contains a solution for managing user accounts and passwords thr
 
 **1. docker-compose.yml**
 
-```
+```dockerfile
 version: '3'
 
 services:
